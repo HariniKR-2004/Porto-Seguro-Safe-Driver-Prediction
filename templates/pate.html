@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Reference the CSS file using Flask's url_for function -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='pate.css') }}">
+    <title>PATE Page</title>
+</head>
+<body>
+    <h1 class="title">Private Aggregation of Teacher Ensembles (PATE)</h1>
+
+    <h2 class="sample-data">First Model for PATE:</h2>
+    <img src="{{ url_for('static', filename='PATE1.png') }}" alt="DAG Image" style="margin-bottom: 20px;">
+
+    <h2 class="sample-data">Second Model for PATE:</h2>
+    <img src="{{ url_for('static', filename='PATE2.png') }}" alt="DAG Image" style="margin-bottom: 20px;">
+
+    <h2 class="sample-data">Third Model for PATE:</h2>
+    <img src="{{ url_for('static', filename='PATE3.png') }}" alt="DAG Image" style="margin-bottom: 20px;">
+
+    <h2 class="sample-data">Fourth Model for PATE:</h2>
+    <img src="{{ url_for('static', filename='PATE4.png') }}" alt="DAG Image" style="margin-bottom: 20px;">
+
+    <h2 class="sample-data">Fifth Model for PATE:</h2>
+    <img src="{{ url_for('static', filename='PATE5.png') }}" alt="DAG Image" style="margin-bottom: 30px;">
+
+    <div class="list-input-container">
+        <label for="prediction-list" class="inline-label">Enter a list for prediction (comma-separated):</label>
+        <input type="text" id="prediction-list" class="list-input" placeholder="eg., [column1,column2,column3, ... ,column38]">
+        <button id="save-button" class="inline-button">Enter</button>
+    </div>
+    
+    <!-- Add a div to display the result -->
+    <p id="error-message" class="error-text"></p> <!-- Display the error message -->
+    <div id="result-div" class="result-text"></div>
+
+    <script>
+        const listInput = document.getElementById('prediction-list');
+        const saveButton = document.getElementById('save-button');
+        const errorText = document.getElementById('error-message');
+        const resultDiv = document.getElementById('result-div');
+
+        listInput.addEventListener('blur', function() {
+            errorText.textContent = ''; // Clear error message on blur
+        });
+
+        // Add an event listener to the input field for the "Enter" key (key code 13)
+        listInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter' || event.keyCode === 13) {
+                saveButton.click(); // Simulate a click on the button
+            }
+        });
+
+        // Replace the click event listener for the button with a function
+        saveButton.addEventListener('click', function() {
+            var enteredList = listInput.value.trim();
+            
+            // Attempt to parse the input as a JavaScript list
+            try {
+                var dataArray = eval(enteredList);
+                
+                // Check if dataArray is an array
+                if (Array.isArray(dataArray)) {
+                    errorText.textContent = '';
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/prediction', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                    var data = JSON.stringify({ entered_list: dataArray });
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            var result = JSON.parse(xhr.responseText);
+                            console.log('Server response:', result.result);
+                            resultDiv.textContent = result.result;
+                        } else {
+                            console.error('Server response:', xhr.responseText);
+                        }
+                    };
+                    xhr.send(data);
+                } else {
+                    errorText.textContent = 'Please enter a valid list.';
+                    resultDiv.textContent = '';
+                }
+            } catch (e) {
+                errorText.textContent = 'Please enter a valid list.';
+                resultDiv.textContent = '';
+            }
+        });
+
+    </script>
+
+    <a class="return-button" href="{{ url_for('home') }}">Return to Home</a>
+</body>
+</html>

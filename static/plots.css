@@ -1,0 +1,86 @@
+/* Add your custom styles here */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  margin-bottom: 50px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 30px 0;
+  color: #8b4513;
+}
+
+/* Adjust the Sample Data heading style */
+.sample-data {
+  font-size: 25px;
+  text-align: left;
+  margin-left: 30px; /* Adjust the margin as needed */
+  color: #ff0000;
+}
+
+table {
+  width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.chart-image {
+  margin: 15px;
+}
+
+.button-container {
+  margin-top: 30px;
+}
+
+.button {
+  margin: 10px 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.return-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #007bff;
+}
+
+.return-button:hover {
+  text-decoration: underline;
+  color: #9400d3;
+}

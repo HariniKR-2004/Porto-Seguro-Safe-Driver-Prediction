@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Reference the CSS file using Flask's url_for function -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='plots.css') }}">
+    <title>Plots Page</title>
+</head>
+<body>
+    
+    <h1 class="title">Visualisation and Insights</h1>
+    
+    <!-- Display the output of the code -->
+    <h2 class="sample-data">Sample Data after removing white noise:</h2>
+    <pre>
+    {{ data_head.to_html() | safe }}
+    </pre>
+    <!-- Display the pie chart -->
+    <h2 class="sample-data">Target Variable Distribution:</h2>
+    <img class="chart-image" src="data:image/png;base64, {{ pie_chart }}" alt="Pie Chart">
+
+    <h2 class="sample-data">Correlation Matrix:</h2>
+    <img class="chart-image" src="data:image/png;base64, {{ heatmap_image | safe }}" alt="Correlation Heatmap">
+
+    <h2 class="sample-data">Box Plots for Numerical Features:</h2>
+    <div class="box-plots">
+        <img class="chart-image" src="data:image/png;base64, {{ box_plots | safe }}" alt="Box Plots">
+    </div>
+
+    <h2 class="sample-data">Pairwise Scatter Plots for Numerical Features:</h2>
+    <div class="scatter-plots">
+        <img class="chart-image" src="data:image/png;base64, {{ scatter_plots | safe }}" alt="Scatter Plots">
+    </div>
+
+    <h2 class="sample-data">Stacked Bar Chart for Categorical Features:</h2>
+    <div class="stacked-bar-chart">
+        <img class="chart-image" src="data:image/png;base64, {{ stacked_bar_chart | safe }}" alt="Stacked Bar Chart">
+    </div>
+    
+    <!-- Return to Home button -->
+    <a class="return-button" href="{{ url_for('home') }}">Return to Home</a>
+</body>
+</html>
